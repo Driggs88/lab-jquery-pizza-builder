@@ -1,62 +1,77 @@
-// Write your Pizza Builder JavaScript in this file.
+var pepli = "<li class='pep-price'>$1 pepperonni</li>";
+var mushli = "<li class='mush-price'>$1 mushrooms</li>";
+var greenli = "<li class='green-price'>$1 green peppers</li>";
+var sauceli = "<li class='sauce-price'>$3 white sauce</li>";
+var glutenli = "<li class='gluten-price'>$5 gluten-free crust</li>";
+function setDefaults(){
+  var price = 10;
+  $(".btn").removeClass("active");
+  $(".green-pepper").hide();
+  $(".pep").hide();
+  $(".mushroom").hide();
+  $(".crust").removeClass("crust-gluten-free");
+  $(".sauce").removeClass("sauce-white");
+  $("strong").text("$"+price);
+  $(".itemized").empty();
+}
+function calculateTotalPrice(){
+  var price = 10;
+  var indyPrices = $(".itemized li");
+  for(var i = 0; i < indyPrices.length; i++){
+    price +=parseInt(indyPrices.eq(i).text()[1]);
+  }
+    $("strong").text("$"+price);
+}
 $(document).ready(function(){
-  $('.btn-pepperonni').on('click',function(){
-    // $("input.pep").attr("disabled", true);
-    $('.pep').toggleClass('off');
-    $('.pep').toggle();
-    sender('.pep', pep);
-    $('.price li').eq(0).toggle();
+  setDefaults();
+  $(".btn-green-peppers").click(function(){
+    $(".green-pepper").toggle();
+    $(this).toggleClass("active");
+    if($(this).hasClass("active")){
+      $(".itemized").append(greenli);
+    }else{
+      $(".green-price").remove();
+    }
+    calculateTotalPrice();
   });
-
-  $('.btn-mushrooms').on('click',function(){
-    // $("input.mushrooms").attr("disabled", true);
-    $('.mushroom').toggleClass('off');
-    $('.mushroom').toggle();
-    sender('.mushroom', mushrooms);
-    $('.price li').eq(1).toggle();
+  $(".btn-pepperonni").click(function(){
+    $(".pep").toggle();
+    $(this).toggleClass("active");
+    if($(this).hasClass("active")){
+      $(".itemized").append(pepli);
+    }else{
+      $(".pep-price").remove();
+    }
+    calculateTotalPrice();
   });
-
-  $('.btn-green-peppers').on('click',function(){
-    // $("input.green-pepper").attr("disabled", true);
-    $('.green-pepper').toggleClass('off');
-    $('.green-pepper').toggle();
-    sender('.green-pepper', greenPepper);
-    $('.price li').eq(2).toggle();
+  $(".btn-mushrooms").click(function(){
+    $(".mushroom").toggle();
+    $(this).toggleClass("active");
+    if($(this).hasClass("active")){
+      $(".itemized").append(mushli);
+    }else{
+      $(".mush-price").remove();
+    }
+    calculateTotalPrice();
   });
-
-  $('.btn-sauce').on('click',function(){
-    // $("input.sauce").attr("disabled", true);
-    $('.sauce').toggleClass('sauce-white');
-    $('.sauce').toggleClass('off');
-    sender('.sauce', sauce);
-    $('.price li').eq(3).toggle();
+  $(".btn-sauce").click(function(){
+    $(".sauce").toggleClass("sauce-white");
+    $(this).toggleClass("active");
+    if($(this).hasClass("active")){
+      $(".itemized").append(sauceli);
+    }else{
+      $(".sauce-price").remove();
+    }
+    calculateTotalPrice();
   });
-
-  $('.btn-crust').on('click',function(){
-    // $("input.crust").attr("disabled", true);
-    $('.crust').toggleClass('crust-gluten-free');
-    $('.crust').toggleClass('off');
-    sender('.crust', crust);
-    $('.price li').eq(4).toggle();
+  $(".btn-crust").click(function(){
+    $(".crust").toggleClass("crust-gluten-free");
+    $(this).toggleClass("active");
+    if($(this).hasClass("active")){
+      $(".itemized").append(glutenli);
+    }else{
+      $(".gluten-price").remove();
+    }
+    calculateTotalPrice();
   });
-
-  var pep = 1,
-    mushrooms = 1,
-    greenPepper = 1,
-    sauce = 3,
-    crust = 5;
-
-  var sum = 21;
-
-      function sender(toppings, toppingsPrice){
-        if ($(toppings).hasClass('off')) {
-          sum -= toppingsPrice;
-          console.log('subtracted');
-        } else {
-          sum += toppingsPrice;
-          console.log('added');
-        }
-        $('strong').text("$" + sum);
-      }
-
 });
